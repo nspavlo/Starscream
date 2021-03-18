@@ -67,7 +67,9 @@ public struct HTTPWSHeader {
         req.setValue(HTTPWSHeader.versionValue, forHTTPHeaderField: HTTPWSHeader.versionName)
         req.setValue(secKeyValue, forHTTPHeaderField: HTTPWSHeader.keyName)
         
-        if let cookies = HTTPCookieStorage.shared.cookies(for: url), !cookies.isEmpty {
+        let scheme = (url.scheme == "ws" ? "http" : (url.scheme == "wss" ? "https" : url.scheme)) ?? ""
+        let httpUrl = URL(string: scheme + "://" + (url.host ?? "") + url.path)
+        if let cookies = HTTPCookieStorage.shared.cookies(for: httpUrl ?? url), !cookies.isEmpty {
             let headers = HTTPCookie.requestHeaderFields(with: cookies)
             for (key, val) in headers {
                 req.setValue(val, forHTTPHeaderField: key)

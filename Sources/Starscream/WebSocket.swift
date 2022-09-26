@@ -84,6 +84,7 @@ public enum WebSocketEvent {
     case error(Error?)
     case viabilityChanged(Bool)
     case reconnectSuggested(Bool)
+    case waiting
     case cancelled
 }
 

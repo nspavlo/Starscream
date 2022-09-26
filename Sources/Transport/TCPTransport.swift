@@ -106,10 +106,10 @@ public class TCPTransport: Transport {
             case .ready:
                 self?.delegate?.connectionChanged(state: .connected)
             case .waiting(let error):
-                let failureCodes: [POSIXErrorCode] = [.ETIMEDOUT, .ENETDOWN, .ENETUNREACH]
+                let failureCodes: [POSIXErrorCode] = [.ETIMEDOUT]
                 switch error {
                 case .posix(let errorCode) where failureCodes.contains(errorCode):
-                    // handle timeout and networks unreachable
+                    // handle timeout
                     self?.delegate?.connectionChanged(state: .failed(error))
                 default:
                     self?.delegate?.connectionChanged(state: .waiting)

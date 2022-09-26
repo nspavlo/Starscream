@@ -121,7 +121,7 @@ FrameCollectorDelegate, HTTPHandlerDelegate {
             let data = httpHandler.convert(request: wsReq)
             transport.write(data: data, completion: {_ in })
         case .waiting:
-            break
+            broadcast(event: .waiting)
         case .failed(let error):
             handleError(error)
         case .viability(let isViable):
